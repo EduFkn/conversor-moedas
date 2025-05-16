@@ -1,12 +1,18 @@
 const button=document.getElementById('convert-button');
 const select=document.getElementById('currency-select');
-const dolar=6.0
-const euro=6.59
 
-const convertValues=() => {
+
+const convertValues= async() => {
 const inputReais=document.getElementById('input-real').value
 const realValueText=document.getElementById('real-value-text')
 const currencyValueText=document.getElementById('currency-value-text')
+
+
+
+const data= await fetch("https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL").then(response=>response.json())
+const dolar= data.USDBRL.high
+const euro= data.EURBRL.high
+
 
 realValueText.innerHTML=currencyValueText.innerHTML=new Intl.NumberFormat('pt-BR',{
   style:'currency',
@@ -39,6 +45,10 @@ if(select.value === "US$ Dólar Americano"){
     currencyName.innerHTML="Euro"
     currencyImg.src="./assets/euro.png"
   }
+  
+  
+
+
   convertValues()
 }
 button.addEventListener("click", convertValues)
